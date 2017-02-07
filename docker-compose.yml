@@ -1,0 +1,20 @@
+web:
+  build: web
+  container_name: test_web
+  volumes:
+    - ./web/test-server:/docker/test
+  working_dir: /docker/test
+  ports:
+    - "80:3000"
+  links:
+    - mongo
+
+mongo:
+  build: mongo
+  container_name: test_mongo
+  ports:
+    - "27017:27017"
+  volumes:
+    - ./mongo/scripts:/docker/scripts
+    - ./mongo/autobackup:/share/autobackup
+    # - ./mongo/db:/data/db #データベースの永続化 Linux以外では動作しない
